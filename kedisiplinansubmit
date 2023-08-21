@@ -1,0 +1,31 @@
+<?php
+
+include "config.php";
+
+
+if(!isset($_SESSION))
+{
+	session_start();
+} 		
+ 		
+
+$idkat = $_POST['kategorinama'];
+$peg   = $_SESSION['id_peg'];
+$ruang = $_SESSION['ruangan'];
+
+foreach ($_POST['nilai'] as $noq => $pegawaiData) {
+    foreach ($pegawaiData as $pegawai_id => $nilai_value) {
+        $sql = "INSERT INTO penilaian (id_peg, id_kategori, nilai,ruangan,input_by) VALUES ('$pegawai_id', '$idkat', '$nilai_value','$ruang','$peg')";
+        if (mysqli_query($con,$sql) !== TRUE) {
+        echo "Error: " . $sql . "<br>" . $con->error;
+        }
+        else{
+        header('Location: index.php');
+        }
+    }
+
+}
+
+
+
+?>
